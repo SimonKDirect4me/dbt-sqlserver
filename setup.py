@@ -69,7 +69,7 @@ setup(
         "dbt-fabric>=1.9.8,<2.0",
         "dbt-core>=1.10.0,<2.0",
         "dbt-common>=1.0,<2.0",
-        "dbt-adapters>=1.15.2,<2.0",
+        "dbt-adapters>=1.22.0,<2.0",
     ],
     cmdclass={
         "verify": VerifyVersionCommand,
