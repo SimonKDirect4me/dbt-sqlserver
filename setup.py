@@ -67,9 +67,9 @@ setup(
     include_package_data=True,
     install_requires=[
         "dbt-fabric==1.9.6",
-        "dbt-core>=1.9.0,<2.0",
+        "dbt-core>=1.9.10,<2.0",
         "dbt-common>=1.0,<2.0",
-        "dbt-adapters>=1.11.0,<2.0",
+        "dbt-adapters>=1.22.0,<2.0",
     ],
     cmdclass={
         "verify": VerifyVersionCommand,
