@@ -49,7 +49,7 @@
         {{ strategy.updated_at }} as {{ columns.dbt_valid_to }}
         from snapshot_query
     ),
-    {%- if strategy.invalidate_hard_deletes %}
+    {%- if strategy.hard_deletes == 'invalidate' %}
         deletes_source_data as (
             select *, {{ unique_key_fields(strategy.unique_key) }}
             from snapshot_query
@@ -71,7 +71,7 @@
         on {{ unique_key_join_on(strategy.unique_key, "snapshotted_data", "source_data") }}
         where ({{ strategy.row_changed }})
     )
-    {%- if strategy.invalidate_hard_deletes %}
+    {%- if strategy.hard_deletes == 'invalidate' %}
         ,
         deletes as (
             select 'delete' as dbt_change_type,
@@ -89,7 +89,7 @@
     select * from insertions
     union all
     select * from updates
-    {%- if strategy.invalidate_hard_deletes %}
+    {%- if strategy.hard_deletes == 'invalidate' %}
         union all
         select * from deletes
     {%- endif %}
