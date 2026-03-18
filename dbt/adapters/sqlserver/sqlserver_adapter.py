@@ -1,9 +1,10 @@
-from typing import Optional
+from typing import List, Optional
 
 import dbt.exceptions
 from dbt.adapters.base.impl import ConstraintSupport
 from dbt.adapters.fabric import FabricAdapter
 from dbt.contracts.graph.nodes import ConstraintType
+from dbt_common.behavior_flags import BehaviorFlag
 
 from dbt.adapters.sqlserver.sqlserver_column import SQLServerColumn
 from dbt.adapters.sqlserver.sqlserver_connections import SQLServerConnectionManager
@@ -26,6 +27,17 @@ class SQLServerAdapter(FabricAdapter):
         ConstraintType.primary_key: ConstraintSupport.ENFORCED,
         ConstraintType.foreign_key: ConstraintSupport.ENFORCED,
     }
+
+    @property
+    def _behavior_flags(self) -> List[BehaviorFlag]:
+        return [
+            *super()._behavior_flags,
+            {
+                "name": "require_batched_execution_for_custom_microbatch_strategy",
+                "default": False,
+                "docs_url": "https://docs.getdbt.com/docs/build/incremental-microbatch",
+            },
+        ]
 
     @classmethod
     def render_model_constraint(cls, constraint) -> Optional[str]:
