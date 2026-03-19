@@ -10,6 +10,7 @@ class SQLServerRelationType(StrEnum):
     Table = "table"
     View = "view"
     CTE = "cte"
+    Function = "function"
 
 
 class SQLServerIncludePolicy(Policy):
